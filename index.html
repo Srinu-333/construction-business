@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pallavi Constructions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #dc4f29;
+      --dark: #212529;
+      --light: #f8f9fa;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--light);
+    }
+    .navbar {
+      background-color: var(--dark);
+    }
+    .navbar-brand {
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .hero {
+      background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80') center center/cover no-repeat;
+      height: 90vh;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+    }
+    .hero .content {
+      position: relative;
+      z-index: 10;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+    .hero p {
+      font-size: 1.2rem;
+    }
+    .btn-primary {
+      background-color: var(--primary);
+      border: none;
+    }
+    .section-title {
+      font-weight: bold;
+      color: var(--dark);
+    }
+    .property-card {
+      transition: all 0.3s;
+    }
+    .property-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    .property-img {
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px 10px 0 0;
+    }
+    .footer {
+      background-color: var(--dark);
+      color: white;
+    }
+    .footer a {
+      color: #ffb58b;
+      text-decoration: none;
+    }
+    .modal-header {
+      background-color: var(--primary);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg shadow-sm" style="background-color: #1a1f36; font-family: 'Poppins', sans-serif;">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#" style="color: #ff4d4d; font-size: 1.4rem;">
+      🏗 Pallavi Constructions
+    </a>
+    <button class="navbar-toggler bg-light" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item">
+          <a class="nav-link text-light mx-2 fw-semibold" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light mx-2 fw-semibold" href="#properties">Properties</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light mx-2 fw-semibold" href="#services">Services</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light mx-2 fw-semibold" href="#contact">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-sm btn-outline-light ms-3 fw-semibold" href="/login"
+             style="transition: 0.3s;"
+             onmouseover="this.style.backgroundColor='#ff4d4d'; this.style.color='white';"
+             onmouseout="this.style.backgroundColor='transparent'; this.style.color='white';">
+            Admin Login
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<!-- Hero -->
+<section class="hero">
+  <div class="content text-white">
+    <h1>Your Dream Home Starts Here</h1>
+    <p>Beautiful, Reliable, and Custom-Built Homes in Hyderabad</p>
+    <a href="#properties" class="btn btn-primary btn-lg mt-3">Explore Properties</a>
+  </div>
+</section>
+
+<section id="properties" class="py-5">
+  <div class="container">
+    <h2 class="text-center section-title mb-4">🏡 Featured Properties</h2>
+    <div class="row g-4">
+      {% for prop in [
+        {'title': '3BHK Premium Villa', 'price': '₹85L', 'desc': 'Gachibowli', 'beds': 3, 'baths': 2, 'area': '1600 sqft', 'img': url_for('static', filename='images/villa2.jpeg')},
+        {'title': '2BHK Elegant Flat', 'price': '₹60L', 'desc': 'Kondapur', 'beds': 2, 'baths': 2, 'area': '1200 sqft', 'img': url_for('static', filename='images/project3.jpeg')},
+        {'title': '4BHK Duplex House', 'price': '₹1.3Cr', 'desc': 'Jubilee Hills', 'beds': 4, 'baths': 3, 'area': '2200 sqft', 'img': url_for('static', filename='images/project2.jpg')}
+      ] %}
+      <div class="col-md-4">
+        <div class="card property-card h-100 shadow-sm">
+          <img src="{{ prop.img }}" class="property-img w-100" alt="{{ prop.title }}">
+          <div class="card-body">
+            <h5 class="card-title fw-bold">{{ prop.title }}</h5>
+            <p class="text-muted"><i class="fa fa-location-dot text-danger me-1"></i>{{ prop.desc }}</p>
+            <ul class="list-unstyled mb-3">
+              <li><i class="fa fa-bed text-warning me-2"></i>{{ prop.beds }} Bedrooms</li>
+              <li><i class="fa fa-bath text-primary me-2"></i>{{ prop.baths }} Bathrooms</li>
+              <li><i class="fa fa-ruler-combined text-success me-2"></i>{{ prop.area }}</li>
+            </ul>
+            <h6 class="text-danger fs-5">{{ prop.price }}</h6>
+            <button 
+              class="btn btn-primary mt-2 w-100" 
+              data-bs-toggle="modal" 
+              data-bs-target="#registerModal" 
+              data-property="{{ prop.title }}">
+              Inquire Now
+            </button>
+
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+<!-- Services -->
+<section id="services" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center section-title mb-4">🔧 Our Services</h2>
+    <div class="row g-4">
+      {% for service in [
+        {'icon': 'fa-building', 'title': 'Custom Construction'},
+        {'icon': 'fa-scroll', 'title': 'Legal Paperwork'},
+        {'icon': 'fa-handshake', 'title': 'Loan Help'},
+        {'icon': 'fa-person-digging', 'title': 'Site Development'},
+        {'icon': 'fa-paint-roller', 'title': 'Interiors'},
+        {'icon': 'fa-toolbox', 'title': 'Property Maintenance'}
+      ] %}
+      <div class="col-md-4">
+        <div class="card h-100 text-center shadow-sm">
+          <div class="card-body">
+            <div class="mb-2"><i class="fas {{ service.icon }} fa-2x text-primary"></i></div>
+            <h5 class="card-title">{{ service.title }}</h5>
+            <p class="card-text">Expert {{ service.title.lower() }} services for your construction needs.</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Experience & Projects Section -->
+<section class="py-5 bg-white">
+  <div class="container">
+    <h2 class="text-center section-title mb-4">🏆 Our Experience & Projects</h2>
+    <div class="row text-center mb-5">
+  <div class="col-md-4">
+    <div class="p-3">
+      <h3 class="text-primary fw-bold"><span class="counter" data-target="10">10</span>+ Years</h3>
+      <p class="text-muted">Building Trust & Quality Homes</p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="p-3">
+      <h3 class="text-success fw-bold"><span class="counter" data-target="25">15</span>+ Projects</h3>
+      <p class="text-muted">Sold & Delivered On-Time</p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="p-3">
+      <h3 class="text-danger fw-bold"><span class="counter" data-target="100">100</span>% Satisfaction</h3>
+      <p class="text-muted">Happy Families & Lifetime Support</p>
+    </div>
+  </div>
+</div>
+
+
+    <div class="row g-3">
+  <div class="col-md-4">
+    <div class="card shadow-sm border-0">
+      <img src="{{ url_for('static', filename='images/villa2.jpeg') }}" class="card-img-top" alt="villa 2">
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm border-0">
+      <img src="{{ url_for('static', filename='images/project2.jpg') }}" class="card-img-top" alt="Project 2">
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm border-0">
+      <img src="{{ url_for('static', filename='images/project3.jpeg') }}" class="card-img-top" alt="project3">
+    </div>
+  </div>
+  <!-- Add more as needed -->
+</div>
+
+</section>
+
+<!-- Footer -->
+<footer class="footer mt-auto py-4" style="background-color: #1a1f36; color: white; border-top: 1px solid #444;">
+  <div class="container">
+    <div class="row text-center justify-content-center">
+
+      <!-- Column 1: About Us -->
+      <div class="col-md-4 mb-4">
+        <h5 class="text-warning fw-bold text-center">Pallavi Constructions</h5>
+        <p class="text-center">
+          Pallavi Constructions is a trusted builder in Hyderabad, crafting premium duplex homes, villas, and flats. 
+          With 20+ years of excellence, we turn your dream home into reality.
+        </p>
+      </div>
+
+      <!-- Column 2: Contact Info -->
+      <div class="col-md-4 mb-4">
+        <h6 class="text-warning fw-bold text-center">Contact</h6>
+        <p class="mb-1 text-center"><i class="fas fa-map-marker-alt me-2"></i>Secunderabad,Hyderabad, Telangana</p>
+        <p class="mb-1 text-center"><i class="fas fa-phone-alt me-2"></i>+91 8309252517</p>
+        <p class="mb-0 text-center"><i class="fas fa-envelope me-2"></i>pallaviconstructions3@gmail.com</p>
+      </div>
+
+      <!-- Column 3: Social Media -->
+      <div class="col-md-3 mb-4">
+        <h6 class="text-warning fw-bold text-center">Follow Us</h6>
+        <div class="d-flex justify-content-center gap-4">
+          <a href="https://www.facebook.com/share/19EoJiuzDG/" target="_blank" class="text-white">
+            <i class="fab fa-facebook-f fa-lg"></i>
+          </a>
+          <a href="https://www.instagram.com/pallavi_constructions?igsh=MWZlZzhoejZoZDhrZw==" target="_blank" class="text-white">
+            <i class="fab fa-instagram fa-lg"></i>
+          </a>
+          <a href="https://wa.me/+91 8309252517" target="_blank" class="text-white">
+            <i class="fab fa-whatsapp fa-lg"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="text-center mt-4 pt-3 border-top" style="border-color: #333;">
+      <small>&copy; 2025 <strong>Pallavi Constructions</strong>. All rights reserved.</small>
+    </div>
+  </div>
+</footer>
+
+
+
+
+
+<!-- Registration Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <form method="POST" action="/register" class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Inquire Property</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" name="property" id="propertyInput">
+        <div class="mb-3">
+          <label class="form-label">Full Name</label>
+          <input name="name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Phone</label>
+          <input name="phone" class="form-control" required pattern="[0-9]{10}">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input name="email" type="email" class="form-control" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary w-100">Submit Inquiry</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+<!-- Toast Container -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+      <div class="toast align-items-center text-white bg-success border-0 show" role="alert">
+        <div class="d-flex">
+          <div class="toast-body">{{ message }}</div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+      </div>
+    {% endfor %}
+  {% endwith %}
+</div>
+
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+<script>
+  const registerModal = document.getElementById('registerModal');
+  registerModal.addEventListener('show.bs.modal', function (event) {
+    const button = event.relatedTarget;
+    const property = button.getAttribute('data-property');
+    document.getElementById('propertyInput').value = property;
+  });
+</script>
+
+
+
+
+<script>
+  const counters = document.querySelectorAll('.counter');
+  let counted = false;
+
+  const animateCounters = () => {
+    if (counted) return;
+    counters.forEach(counter => {
+      const updateCount = () => {
+        const target = +counter.getAttribute('data-target');
+        const count = +counter.innerText;
+        const increment = Math.ceil(target / 100);
+
+        if (count < target) {
+          counter.innerText = count + increment;
+          setTimeout(updateCount, 30);
+        } else {
+          counter.innerText = target;
+        }
+      };
+      updateCount();
+    });
+    counted = true;
+  };
+
+  // Detect when the section is in view
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounters();
+      }
+    });
+  }, {
+    threshold: 0.4
+  });
+
+  const targetSection = document.querySelector('#properties + section'); // your experience section
+  if (targetSection) {
+    observer.observe(targetSection);
+  }
+</script>
+
+</html>
